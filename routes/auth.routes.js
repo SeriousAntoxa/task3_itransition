@@ -44,8 +44,6 @@ router.post(
 
     const user = new User({ userName, email, password: hashedPassword, date: dateNow, lastDate: dateNew, state:false, block:false}) 
 
-    console.log('user', user)
-
     await user.save()
 
     res.status(201).json({ message: 'Пользователь создан'})
