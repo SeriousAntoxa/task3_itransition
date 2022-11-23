@@ -1,4 +1,6 @@
 import React, { useContext, useState } from "react";
+import {useNavigate} from "react-router-dom";
+
 import { AuthContext } from "../context/Auth.Context";
 import { useHttp } from "../hooks/http.hook";
 
@@ -6,6 +8,8 @@ export const AuthPage = () => {
   const auth = useContext(AuthContext);
   const { loading, request } = useHttp();
   const [form, setForm] = useState({ userName: "", email: "", password: "" });
+
+  const navigate = useNavigate()
 
   const changeHandler = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -21,6 +25,7 @@ export const AuthPage = () => {
     try {
       const data = await request("/api/auth/login", "POST", { ...form });
       auth.login(data.token, data.userId, data.block);
+      navigate("/users")
     } catch (e) {}
   };
 

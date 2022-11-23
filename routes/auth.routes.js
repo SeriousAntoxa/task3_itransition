@@ -11,8 +11,8 @@ router.post(
   '/register',
   [
     check('userName', 'Минимальная длинна имени 1 символ').exists(),
-    check('password', 'Минимальная длинна пароля 1 символ').exists(),
-    check('email', 'Некорректный email').exists()
+    check('password', 'Минимальная длинна пароля 1 символ').exists()
+
   ],
   async (req, res) => {
 
@@ -25,7 +25,7 @@ router.post(
         errors: errors.array(),
         message: 'Некорректные данные при регистрации'
       })
-    }
+    } 
 
     const {userName, email, password} = req.body
     
@@ -34,7 +34,6 @@ router.post(
     if (candidate) {
       return res.status(400).json({ message: 'Ошибка! Пользователь с таким именем уже существует'})
     }
-    console.log('candidate', candidate)
     
     const hashedPassword = await bcrypt.hash(password, 12)
 
@@ -42,7 +41,7 @@ router.post(
     const dateNow = `${DATE.getDate()}-${DATE.getMonth() + 1}-${DATE.getFullYear()} ${DATE.getHours()}:${DATE.getMinutes()}`
     const dateNew = 'don`t login'
 
-    const user = new User({ userName, email, password: hashedPassword, date: dateNow, lastDate: dateNew, state:false, block:false}) 
+    const user = new User({ userName, password: hashedPassword, email, date: dateNow, lastDate: dateNew, state:false, block:false}) 
 
     await user.save()
 
@@ -65,7 +64,7 @@ try {
   const errors = validationResult(req)
 
   if (!errors.isEmpty()) {
-    return res.status(400).json({
+    return res.status(400).json({ 
       errors: errors.array(),
       message: 'Некорректные данные при входе'
     })
