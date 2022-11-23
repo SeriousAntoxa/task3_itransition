@@ -1,0 +1,5 @@
+{
+  "port": 5000,
+  "jwtSecret": "task3",
+  "mongoUrl": "mongodb+srv://SeriousSam:AnT210oXa997@cluster0.sfaakqe.mongodb.net/?retryWrites=true&w=majority"
+}
